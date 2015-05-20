@@ -38,6 +38,9 @@
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
+    var last = array[array.length-1];
+    array.splice(0, array.length - n)
+    return n === undefined ? last : array;
   };
 
   // Call iterator(value, key, collection) for each element of collection.
