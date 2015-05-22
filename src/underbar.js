@@ -56,8 +56,8 @@
       };
     } else if ((typeof collection === "object") && 
            (collection !== null)){
-      for(el in collection){
-        iterator(collection[el], el, collection)
+      for(var el in collection){
+        iterator(collection[el], el, collection);
       }
     }
   };
@@ -101,7 +101,7 @@
   _.uniq = function(array) {
     var uniqs = [];
     _.each(array, function(el){
-      if(uniqs.indexOf(el) === -1){
+      if(_.indexOf(uniqs, el) === -1){
         uniqs.push(el);
       }
     })
@@ -111,9 +111,19 @@
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
-    // map() is a useful primitive iteration function that works a lot
-    // like each(), but in addition to running the operation on all
-    // the members, it also maintains an array of results.
+    var mapped = [];
+    if (Array.isArray(collection)){
+      for (var i = 0; i < collection.length; i++) {
+        mapped.push(iterator(collection[i], i, collection));
+      };
+    } else if ((typeof collection === "object") && 
+           (collection !== null))
+    {
+      for(var el in collection){
+        mapped.push(iterator(collection[el], el, collection));
+      }
+    }
+    return mapped;
   };
 
   /*
