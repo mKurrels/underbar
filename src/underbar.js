@@ -50,7 +50,6 @@
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
     if (Array.isArray(collection)){
-      var arr = [];
       for (var i = 0; i < collection.length; i++) {
         iterator(collection[i], i, collection);
       };
@@ -112,17 +111,9 @@
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
     var mapped = [];
-    if (Array.isArray(collection)){
-      for (var i = 0; i < collection.length; i++) {
-        mapped.push(iterator(collection[i], i, collection));
-      };
-    } else if ((typeof collection === "object") && 
-           (collection !== null))
-    {
-      for(var el in collection){
-        mapped.push(iterator(collection[el], el, collection));
-      }
-    }
+    _.each(collection, function(el){
+      mapped.push(iterator(el))
+    })
     return mapped;
   };
 
@@ -164,8 +155,17 @@
   //     return total + number * number;
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
-  _.reduce = function(collection, iterator, accumulator) {
-  };
+  _.reduce = function(collection, iterator, accumulator){
+    var result = accumulator;
+    _.each(collection, function(item, key, list){
+      if(result !== undefined){
+        result = iterator(result, item, key, list)
+      } else {
+        result = item;
+      }
+    });
+    return result;
+  }
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
@@ -182,7 +182,9 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
+    return _.reduce(collection, function(item){
+      
+    });
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
