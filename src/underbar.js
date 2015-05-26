@@ -233,6 +233,15 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    var args = arguments;
+    return _.reduce(args, function(a, b){
+      _.each(b, function(value, key){
+        if(!a.hasOwnProperty(key)){
+          a[key] = value;
+        }
+      })
+      return a;
+    }, args[0]);
   };
 
 
