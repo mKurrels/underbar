@@ -111,8 +111,8 @@
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
     var mapped = [];
-    _.each(collection, function(el){
-      mapped.push(iterator(el))
+    _.each(collection, function(item, key, collection){
+      mapped.push(iterator(item, key, collection));
     })
     return mapped;
   };
@@ -304,6 +304,7 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    setTimeout.apply(this, arguments);
   };
 
 
