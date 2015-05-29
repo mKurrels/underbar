@@ -285,15 +285,15 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
-    var prevArgs = [];
-    var result;
+    var prevCalls = {};
+    console.log(prevCalls);
     return function(){
       var args = arguments;
-      if (_.indexOf(prevArgs, args[0]) === -1){
-        result = func.apply(this, args)
-        prevArgs.push(args[0]);
+      var index = _.indexOf(prevCalls, args[0]);
+      if (!(args[0] in prevCalls)){
+        prevCalls[args[0]] = (func.apply(this, args));
       }
-      return result;
+      return prevCalls[args[0]];
     };
   };
 
@@ -327,6 +327,7 @@
       arrayCopy[i] = arrayCopy[randomInt];
       arrayCopy[randomInt] = copiedItem;
     });
+    if () {};
     return arrayCopy;
   }
 
