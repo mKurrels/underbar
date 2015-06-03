@@ -327,7 +327,6 @@
       arrayCopy[i] = arrayCopy[randomInt];
       arrayCopy[randomInt] = copiedItem;
     });
-    if () {};
     return arrayCopy;
   }
 
